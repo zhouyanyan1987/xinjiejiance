@@ -4,12 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>心结解开评估系统 - 找回内心平静</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* 简化的CSS样式，确保系统正常运行 */
+        /* 完整的独立CSS样式，不依赖外部字体 */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         :root {
@@ -24,8 +20,8 @@
             --success-color: #28A745;
             --warning-color: #FFC107;
             --error-color: #DC3545;
-            --font-heading: 'Poppins', sans-serif;
-            --font-body: 'Inter', sans-serif;
+            --font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             --space-xs: 8px;
             --space-sm: 16px;
             --space-md: 24px;
@@ -49,803 +45,637 @@
             min-height: 100vh;
         }
 
-        .page-container { display: none; min-height: 100vh; padding: var(--space-md); }
-        .page-container.active { display: block; }
-
-        .hero-section {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: var(--space-xxxl) var(--space-md);
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: var(--space-lg);
         }
 
-        .hero-content {
-            max-width: 768px;
+        .header {
             text-align: center;
+            margin-bottom: var(--space-xl);
+            padding: var(--space-lg) 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-card);
         }
 
-        .hero-title {
-            font-family: var(--font-heading);
+        .header h1 {
+            font-size: 2.5rem;
             font-weight: 600;
-            font-size: 48px;
-            line-height: 1.2;
-            color: var(--text-primary);
+            margin-bottom: var(--space-sm);
+            font-family: var(--font-heading);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .page-container {
+            display: none;
+            background: var(--bg-surface);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-card);
+            padding: var(--space-xl);
             margin-bottom: var(--space-lg);
         }
 
-        .hero-subtitle {
-            font-size: 18px;
-            color: var(--text-secondary);
-            margin-bottom: var(--space-xl);
-            line-height: 1.8;
+        .page-container.active {
+            display: block;
         }
 
-        .disclaimer {
-            background-color: #FFFBEB;
-            border: 1px solid #FED7AA;
-            border-radius: var(--border-radius);
+        .intro-content {
+            text-align: center;
+        }
+
+        .intro-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-md);
+            margin: var(--space-xl) 0;
+        }
+
+        .feature-card {
             padding: var(--space-md);
-            margin: var(--space-xl) 0;
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
-            text-align: left;
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-
-        .test-info {
-            display: flex;
-            justify-content: center;
-            gap: var(--space-xl);
-            margin: var(--space-xl) 0;
-            flex-wrap: wrap;
-        }
-
-        .info-item {
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-
-        .cta-button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: var(--space-md) var(--space-xl);
-            font-size: 16px;
-            font-weight: 500;
-            font-family: var(--font-heading);
+            background: var(--primary-light);
             border-radius: var(--border-radius);
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            box-shadow: var(--shadow-button);
-            min-width: 220px;
-            min-height: 56px;
+            border: 1px solid var(--border-color);
         }
 
-        .cta-button:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(45, 106, 106, 0.2);
-        }
-
-        .test-container {
-            max-width: 768px;
-            margin: 0 auto;
-            padding: var(--space-xl) 0;
-        }
-
-        .progress-section {
-            margin-bottom: var(--space-xl);
+        .feature-card h3 {
+            color: var(--primary-color);
+            margin-bottom: var(--space-sm);
+            font-size: 1.1rem;
         }
 
         .progress-bar {
-            width: 100%;
+            background: var(--border-color);
+            border-radius: 20px;
             height: 8px;
-            background-color: var(--primary-light);
-            border-radius: 4px;
+            margin-bottom: var(--space-lg);
             overflow: hidden;
-            margin-bottom: var(--space-sm);
         }
 
         .progress-fill {
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-hover));
             height: 100%;
-            background-color: var(--primary-color);
             width: 0%;
-            transition: width 0.3s ease;
-            border-radius: 4px;
-        }
-
-        .progress-text {
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 14px;
+            transition: var(--transition-smooth);
+            border-radius: 20px;
         }
 
         .question-card {
-            background-color: var(--bg-surface);
+            background: white;
+            border: 2px solid var(--border-color);
             border-radius: var(--border-radius);
             padding: var(--space-lg);
-            box-shadow: var(--shadow-card);
-            margin-bottom: var(--space-xl);
+            margin-bottom: var(--space-lg);
+            position: relative;
         }
 
         .question-header {
             margin-bottom: var(--space-lg);
         }
 
-        .question-title {
-            font-family: var(--font-heading);
+        .question-number {
+            color: var(--primary-color);
             font-weight: 600;
-            font-size: 24px;
-            line-height: 1.3;
+            font-size: 0.9rem;
+            margin-bottom: var(--space-xs);
+        }
+
+        .question-title {
+            font-size: 1.3rem;
+            font-weight: 500;
             color: var(--text-primary);
             margin-bottom: var(--space-sm);
         }
 
         .dimension-tag {
             display: inline-block;
-            background-color: var(--primary-light);
+            background: var(--primary-light);
             color: var(--primary-color);
             padding: var(--space-xs) var(--space-sm);
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 0.85rem;
             font-weight: 500;
         }
 
-        .question-content {
-            font-size: 16px;
-            color: var(--text-secondary);
-            margin-bottom: var(--space-lg);
-            line-height: 1.6;
-        }
-
-        .question-options {
-            display: flex;
-            flex-direction: column;
+        .options-grid {
+            display: grid;
             gap: var(--space-sm);
+            margin-bottom: var(--space-lg);
         }
 
         .option-item {
-            background-color: var(--bg-warm);
+            display: flex;
+            align-items: center;
+            padding: var(--space-sm);
             border: 2px solid var(--border-color);
             border-radius: var(--border-radius);
-            padding: var(--space-md);
             cursor: pointer;
             transition: var(--transition-quick);
-            position: relative;
+            background: white;
         }
 
         .option-item:hover {
-            border-color: var(--primary-light);
-            background-color: var(--primary-light);
+            border-color: var(--primary-color);
+            background: var(--primary-light);
         }
 
         .option-item.selected {
             border-color: var(--primary-color);
-            background-color: var(--primary-light);
-            color: var(--primary-color);
+            background: var(--primary-light);
         }
 
         .option-item input[type="radio"] {
-            position: absolute;
-            opacity: 0;
-            pointer-events: none;
+            margin-right: var(--space-sm);
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
         }
 
-        .option-label {
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
+        .option-item label {
+            flex: 1;
             cursor: pointer;
-            font-size: 15px;
-            line-height: 1.5;
-        }
-
-        .option-radio {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--border-color);
-            border-radius: 50%;
-            position: relative;
-            transition: var(--transition-quick);
-        }
-
-        .option-item.selected .option-radio {
-            border-color: var(--primary-color);
-        }
-
-        .option-radio::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: var(--primary-color);
-            opacity: 0;
-            transition: opacity 0.2s ease;
-        }
-
-        .option-item.selected .option-radio::after {
-            opacity: 1;
+            font-size: 1rem;
         }
 
         .navigation {
             display: flex;
             justify-content: space-between;
-            gap: var(--space-md);
-            margin-top: var(--space-xl);
+            align-items: center;
+            margin-top: var(--space-lg);
         }
 
-        .nav-button {
-            padding: var(--space-md) var(--space-lg);
-            font-size: 16px;
-            font-weight: 500;
+        .btn {
+            padding: var(--space-sm) var(--space-lg);
+            border: none;
             border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 500;
             cursor: pointer;
-            transition: var(--transition-smooth);
-            min-width: 120px;
-            border: 2px solid transparent;
+            transition: var(--transition-quick);
+            font-family: var(--font-body);
         }
 
-        .nav-button.primary {
-            background-color: var(--primary-color);
+        .btn-primary {
+            background: var(--primary-color);
             color: white;
-            border-color: var(--primary-color);
         }
 
-        .nav-button.primary:hover:not(:disabled) {
-            background-color: var(--primary-hover);
-            border-color: var(--primary-hover);
+        .btn-primary:hover:not(:disabled) {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
         }
 
-        .nav-button.secondary {
-            background-color: transparent;
-            color: var(--text-secondary);
-            border-color: var(--border-color);
-        }
-
-        .nav-button.secondary:hover:not(:disabled) {
-            border-color: var(--primary-color);
+        .btn-secondary {
+            background: transparent;
             color: var(--primary-color);
+            border: 2px solid var(--primary-color);
         }
 
-        .nav-button:disabled {
+        .btn-secondary:hover:not(:disabled) {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+            transform: none !important;
         }
 
-        .result-container {
-            max-width: 1024px;
-            margin: 0 auto;
-            padding: var(--space-xl) var(--space-md);
-        }
-
-        .result-header {
+        .result-summary {
             text-align: center;
-            margin-bottom: var(--space-xxxl);
+            margin-bottom: var(--space-xl);
         }
 
-        .result-title {
-            font-family: var(--font-heading);
-            font-weight: 600;
-            font-size: 36px;
-            line-height: 1.2;
-            color: var(--text-primary);
-            margin-bottom: var(--space-md);
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--space-lg);
+            font-size: 3rem;
+            font-weight: bold;
+            position: relative;
         }
 
-        .result-subtitle {
-            font-size: 18px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        .summary-section {
-            margin-bottom: var(--space-xxxl);
-        }
-
-        .summary-card {
-            background-color: var(--bg-surface);
-            border-radius: var(--border-radius);
-            padding: var(--space-xl);
-            box-shadow: var(--shadow-card);
-            text-align: center;
-        }
-
-        .overall-score {
-            margin: var(--space-lg) 0;
-        }
-
-        .score-number {
-            font-family: var(--font-heading);
-            font-weight: 700;
-            font-size: 64px;
-            color: var(--primary-color);
-            line-height: 1;
-            margin-bottom: var(--space-sm);
-        }
-
-        .score-label {
-            font-size: 16px;
-            color: var(--text-secondary);
-            font-weight: 500;
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+            z-index: -1;
         }
 
         .score-description {
-            font-size: 16px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            max-width: 600px;
-            margin: 0 auto;
+            font-size: 1.1rem;
+            margin-bottom: var(--space-xl);
         }
 
-        .chart-section {
-            margin-bottom: var(--space-xxxl);
-        }
-
-        .chart-section h3 {
-            font-family: var(--font-heading);
-            font-weight: 600;
-            font-size: 24px;
-            color: var(--text-primary);
-            margin-bottom: var(--space-lg);
-            text-align: center;
-        }
-
-        .chart-container {
-            background-color: var(--bg-surface);
-            border-radius: var(--border-radius);
-            padding: var(--space-xl);
-            box-shadow: var(--shadow-card);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        #trauma-radar-chart {
-            max-height: 400px;
-        }
-
-        .priority-section {
-            margin-bottom: var(--space-xxxl);
-        }
-
-        .priority-section h3 {
-            font-family: var(--font-heading);
-            font-weight: 600;
-            font-size: 24px;
-            color: var(--text-primary);
-            margin-bottom: var(--space-lg);
-            text-align: center;
-        }
-
-        .priority-card {
-            background-color: var(--bg-surface);
-            border-radius: var(--border-radius);
-            padding: var(--space-xl);
-            box-shadow: var(--shadow-card);
-            border-left: 4px solid var(--primary-color);
-        }
-
-        .priority-item {
-            margin-bottom: var(--space-lg);
-            padding-bottom: var(--space-lg);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .priority-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .priority-title {
-            font-family: var(--font-heading);
-            font-weight: 600;
-            font-size: 18px;
-            color: var(--primary-color);
-            margin-bottom: var(--space-sm);
-        }
-
-        .priority-score {
-            display: inline-block;
-            background-color: var(--primary-light);
-            color: var(--primary-color);
-            padding: var(--space-xs) var(--space-sm);
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-            margin-bottom: var(--space-sm);
-        }
-
-        .priority-impact {
-            color: var(--text-secondary);
-            line-height: 1.6;
-            font-size: 14px;
-        }
-
-        .details-section {
-            margin-bottom: var(--space-xxxl);
-        }
-
-        .details-section h3 {
-            font-family: var(--font-heading);
-            font-weight: 600;
-            font-size: 24px;
-            color: var(--text-primary);
-            margin-bottom: var(--space-lg);
-        }
-
-        .details-grid {
+        .results-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: var(--space-lg);
+            margin-bottom: var(--space-xl);
         }
 
-        .detail-card {
-            background-color: var(--bg-surface);
+        .result-card {
+            background: white;
+            border: 1px solid var(--border-color);
             border-radius: var(--border-radius);
             padding: var(--space-lg);
-            box-shadow: var(--shadow-card);
         }
 
-        .detail-card h4 {
-            font-family: var(--font-heading);
-            font-weight: 600;
-            font-size: 18px;
-            color: var(--text-primary);
-            margin-bottom: var(--space-sm);
+        .result-card h3 {
+            color: var(--primary-color);
+            margin-bottom: var(--space-md);
+            font-size: 1.2rem;
         }
 
-        .score-indicator {
+        .dimension-item {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: var(--space-sm);
-            margin-bottom: var(--space-sm);
-        }
-
-        .score-badge {
-            padding: var(--space-xs) var(--space-sm);
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .score-badge.low { background-color: #D1FAE5; color: #065F46; }
-        .score-badge.medium { background-color: #FEF3C7; color: #92400E; }
-        .score-badge.high { background-color: #FEE2E2; color: #991B1B; }
-        .score-badge.severe { background-color: #FECACA; color: #7F1D1D; }
-
-        .detail-card p {
-            color: var(--text-secondary);
-            line-height: 1.6;
-            font-size: 14px;
-        }
-
-        .recommendations-section {
-            margin-bottom: var(--space-xxxl);
-        }
-
-        .recommendations-section h3 {
-            font-family: var(--font-heading);
-            font-weight: 600;
-            font-size: 24px;
-            color: var(--text-primary);
-            margin-bottom: var(--space-lg);
-        }
-
-        .recommendations-card {
-            background-color: var(--bg-surface);
-            border-radius: var(--border-radius);
-            padding: var(--space-xl);
-            box-shadow: var(--shadow-card);
-        }
-
-        .recommendation-item {
-            padding: var(--space-md) 0;
+            padding: var(--space-sm) 0;
             border-bottom: 1px solid var(--border-color);
         }
 
-        .recommendation-item:last-child {
+        .dimension-item:last-child {
             border-bottom: none;
         }
 
-        .recommendation-item h4 {
-            font-family: var(--font-heading);
+        .dimension-score {
             font-weight: 600;
-            font-size: 16px;
-            color: var(--text-primary);
+            color: var(--primary-color);
+        }
+
+        .priority-list {
+            list-style: none;
+        }
+
+        .priority-item {
+            padding: var(--space-sm);
             margin-bottom: var(--space-sm);
+            background: var(--primary-light);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--primary-color);
         }
 
-        .recommendation-item p {
-            color: var(--text-secondary);
-            line-height: 1.6;
-            font-size: 14px;
-        }
-
-        .resources-section {
-            margin-bottom: var(--space-xxxl);
-        }
-
-        .resources-section h3 {
-            font-family: var(--font-heading);
-            font-weight: 600;
-            font-size: 24px;
-            color: var(--text-primary);
+        .recommendations {
+            background: var(--bg-warm);
+            border-radius: var(--border-radius);
+            padding: var(--space-lg);
             margin-bottom: var(--space-lg);
         }
 
-        .resources-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--space-lg);
-        }
-
-        .resource-card {
-            background-color: var(--bg-surface);
-            border-radius: var(--border-radius);
-            padding: var(--space-lg);
-            box-shadow: var(--shadow-card);
-            text-align: center;
-        }
-
-        .resource-card h4 {
-            font-family: var(--font-heading);
-            font-weight: 600;
-            font-size: 16px;
-            color: var(--text-primary);
-            margin-bottom: var(--space-sm);
-        }
-
-        .resource-card p {
-            color: var(--text-secondary);
-            line-height: 1.6;
-            font-size: 14px;
+        .recommendations h3 {
+            color: var(--primary-color);
             margin-bottom: var(--space-md);
         }
 
-        .resource-card a {
+        .recommendation-item {
+            margin-bottom: var(--space-sm);
+            padding-left: var(--space-md);
+            position: relative;
+        }
+
+        .recommendation-item::before {
+            content: '•';
             color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 500;
-            padding: var(--space-sm) var(--space-md);
-            border: 2px solid var(--primary-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .error-message {
+            background: #fee;
+            color: var(--error-color);
+            padding: var(--space-md);
             border-radius: var(--border-radius);
-            transition: var(--transition-quick);
-            display: inline-block;
+            border: 1px solid var(--error-color);
+            margin-bottom: var(--space-lg);
+            display: none;
         }
 
-        .resource-card a:hover {
-            background-color: var(--primary-color);
-            color: white;
+        .error-message.show {
+            display: block;
         }
 
-        .result-actions {
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            gap: var(--space-md);
-            flex-wrap: wrap;
-        }
-
-        .action-button {
-            padding: var(--space-md) var(--space-lg);
-            font-size: 16px;
-            font-weight: 500;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            min-width: 180px;
-            border: 2px solid transparent;
-        }
-
-        .action-button.primary {
-            background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-        }
-
-        .action-button.primary:hover {
-            background-color: var(--primary-hover);
-            border-color: var(--primary-hover);
-        }
-
-        .action-button.secondary {
-            background-color: transparent;
-            color: var(--text-secondary);
-            border-color: var(--border-color);
-        }
-
-        .action-button.secondary:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-        }
-
-        .loading {
+        .chart-container {
+            width: 100%;
+            height: 400px;
+            margin: var(--space-lg) 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 50vh;
-            font-size: 18px;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            position: relative;
+        }
+
+        .chart-fallback {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .manual-chart {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            display: none;
+        }
+
+        .manual-chart.show {
+            display: block;
+        }
+
+        .chart-text {
+            position: absolute;
+            font-size: 0.8rem;
+            text-align: center;
             color: var(--text-secondary);
         }
 
         @media (max-width: 768px) {
-            .hero-title { font-size: 32px; }
-            .hero-subtitle { font-size: 16px; }
-            .test-info { flex-direction: column; gap: var(--space-md); }
-            .question-title { font-size: 20px; }
-            .result-title { font-size: 28px; }
-            .score-number { font-size: 48px; }
-            .details-grid { grid-template-columns: 1fr; }
-            .resources-grid { grid-template-columns: 1fr; }
-            .result-actions { flex-direction: column; align-items: center; }
-            .navigation { flex-direction: column; }
+            .container {
+                padding: var(--space-sm);
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .page-container {
+                padding: var(--space-lg);
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: var(--space-sm);
+            }
+            
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 480px) {
-            .page-container { padding: var(--space-sm); }
-            .hero-section { padding: var(--space-xxl) var(--space-sm); }
-            .hero-title { font-size: 28px; }
-            .question-card { padding: var(--space-md); }
-            .summary-card, .chart-container, .recommendations-card { padding: var(--space-lg); }
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .question-title {
+                font-size: 1.1rem;
+            }
+            
+            .score-circle {
+                width: 150px;
+                height: 150px;
+                font-size: 2.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- 错误提示区域 -->
-    <div id="error-message" style="display: none; position: fixed; top: 20px; right: 20px; background: #ff4444; color: white; padding: 15px; border-radius: 8px; z-index: 9999;"></div>
+    <div class="container">
+        <header class="header">
+            <h1>心结解开评估系统</h1>
+            <p>通过科学的心理评估，帮助您了解内心创伤，找到治愈的方向</p>
+        </header>
 
-    <!-- 测试介绍页面 -->
-    <div id="intro-page" class="page-container active">
-        <div class="hero-section">
-            <div class="hero-content">
-                <h1 class="hero-title">心结解开评估系统</h1>
-                <p class="hero-subtitle">
-                    每个人心中都可能有一些解不开的心结，它们影响着我们的情绪、决策和生活质量。
-                    通过这个评估系统，识别您需要重点解开的心结，找回内心的平静。
+        <div id="error-message" class="error-message"></div>
+
+        <!-- 介绍页面 -->
+        <div id="intro-page" class="page-container active">
+            <div class="intro-content">
+                <h2 style="margin-bottom: var(--space-lg); color: var(--primary-color);">欢迎使用心结解开评估系统</h2>
+                <p style="margin-bottom: var(--space-xl); font-size: 1.1rem; line-height: 1.8;">
+                    这是一个专业的心理创伤评估工具，通过28道精心设计的题目，从7个维度全面评估您可能存在的心理创伤。
+                    评估结果将为您提供个性化的建议和治愈方向。
                 </p>
                 
-                <div class="disclaimer">
-                    <span>💡 本评估仅为自我探索工具，帮助您更好地了解自己的内心世界。如需要，请寻求专业心理健康服务。</span>
-                </div>
-
-                <div class="test-info">
-                    <div class="info-item">
-                        <span>⏱️ 预计用时：15-20分钟</span>
+                <div class="intro-features">
+                    <div class="feature-card">
+                        <h3>科学评估</h3>
+                        <p>基于专业心理学理论，结合实际创伤事件进行评估</p>
                     </div>
-                    <div class="info-item">
-                        <span>🔒 完全匿名保密</span>
+                    <div class="feature-card">
+                        <h3>全面分析</h3>
+                        <p>涵盖亲密关系、家庭、校园、职场等多个生活领域</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>个性化建议</h3>
+                        <p>根据您的具体情况，提供针对性的治愈建议</p>
                     </div>
                 </div>
-
-                <button class="cta-button" onclick="startTest()">开始探索</button>
+                
+                <button onclick="startTest()" class="btn btn-primary" style="font-size: 1.1rem; padding: var(--space-md) var(--space-xl);">
+                    开始评估
+                </button>
             </div>
         </div>
-    </div>
 
-    <!-- 测试页面 -->
-    <div id="test-page" class="page-container">
-        <div class="test-container">
-            <div class="progress-section">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progress-fill"></div>
-                </div>
-                <div class="progress-text">
-                    <span id="current-question">1</span> / <span id="total-questions">28</span>
-                </div>
+        <!-- 测试页面 -->
+        <div id="test-page" class="page-container">
+            <div class="progress-bar">
+                <div id="progress-fill" class="progress-fill"></div>
             </div>
-
-            <div class="question-card" id="question-card">
+            
+            <div class="question-card">
                 <div class="question-header">
-                    <h2 class="question-title" id="question-title"></h2>
-                    <div class="dimension-tag" id="dimension-tag"></div>
+                    <div class="question-number">
+                        题目 <span id="current-question">1</span>/<span id="total-questions">28</span>
+                    </div>
+                    <h2 id="question-title" class="question-title"></h2>
+                    <span id="dimension-tag" class="dimension-tag"></span>
                 </div>
-                <div class="question-content" id="question-content"></div>
-                <div class="question-options" id="question-options"></div>
-            </div>
-
-            <div class="navigation">
-                <button class="nav-button secondary" id="prev-btn" onclick="previousQuestion()" disabled>
-                    上一题
-                </button>
-                <button class="nav-button primary" id="next-btn" onclick="nextQuestion()" disabled>
-                    下一题
-                </button>
+                
+                <div id="question-options" class="options-grid"></div>
+                
+                <div class="navigation">
+                    <button id="prev-btn" class="btn btn-secondary" onclick="previousQuestion()" disabled>
+                        上一题
+                    </button>
+                    <button id="next-btn" class="btn btn-primary" onclick="nextQuestion()" disabled>
+                        下一题
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- 结果页面 -->
-    <div id="result-page" class="page-container">
-        <div class="result-container">
-            <div class="result-header">
-                <h1 class="result-title">您的心结解开报告</h1>
-                <p class="result-subtitle">通过深入分析，识别您需要重点解开的心结及其影响</p>
-            </div>
-
-            <div class="summary-section">
-                <div class="summary-card">
-                    <h3>总体评估</h3>
-                    <div class="overall-score">
-                        <div class="score-number" id="overall-score">0</div>
-                        <div class="score-label">心结困扰指数</div>
-                    </div>
-                    <div class="score-description" id="score-description"></div>
-                </div>
-            </div>
-
-            <div class="chart-section">
-                <h3>各维度心结分布</h3>
-                <div class="chart-container">
-                    <canvas id="trauma-radar-chart"></canvas>
-                </div>
-            </div>
-
-            <div class="priority-section">
-                <h3>重点需要解开的心结</h3>
-                <div class="priority-card" id="priority-card">
-                    <!-- 动态生成重点心结内容 -->
-                </div>
-            </div>
-
-            <div class="details-section">
-                <h3>详细分析</h3>
-                <div class="details-grid" id="details-grid">
-                    <!-- 动态生成详细内容卡片 -->
-                </div>
-            </div>
-
-            <div class="recommendations-section">
-                <h3>心结解开建议</h3>
-                <div class="recommendations-card" id="recommendations-card">
-                    <!-- 动态生成建议内容 -->
-                </div>
-            </div>
-
-            <div class="resources-section">
-                <h3>支持资源</h3>
-                <div class="resources-grid">
-                    <div class="resource-card">
-                        <h4>心理倾听与成长服务</h4>
-                        <p>专业的心理倾听师为您提供温暖的陪伴和成长支持</p>
-                        <a href="#" onclick="alert('实际应用中可链接到专业心理咨询平台')">预约服务</a>
-                    </div>
-                    <div class="resource-card">
-                        <h4>解开心结支持小组</h4>
-                        <p>加入解开心结支持小组，与有相似经历的人分享、互相支持</p>
-                        <a href="#" onclick="alert('实际应用中可链接到相关支持群体网站')">了解更多</a>
+        <!-- 结果页面 -->
+        <div id="result-page" class="page-container">
+            <div class="result-summary">
+                <div class="score-circle">
+                    <div>
+                        <div id="overall-score">0</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">分</div>
                     </div>
                 </div>
+                <div id="score-description" class="score-description"></div>
             </div>
-
-            <div class="result-actions">
-                <button class="action-button primary" onclick="downloadReport()">
-                    下载完整报告
+            
+            <div class="chart-container">
+                <div id="chart-canvas" class="chart-fallback">
+                    <p style="color: var(--text-secondary);">雷达图加载中...</p>
+                </div>
+            </div>
+            
+            <div class="results-grid">
+                <div class="result-card">
+                    <h3>各维度得分</h3>
+                    <div id="details-grid"></div>
+                </div>
+                
+                <div class="result-card">
+                    <h3>重点关注领域</h3>
+                    <ul id="priority-list" class="priority-list"></ul>
+                </div>
+            </div>
+            
+            <div class="recommendations">
+                <h3>个性化建议</h3>
+                <div id="recommendations-content"></div>
+            </div>
+            
+            <div style="text-align: center; margin-top: var(--space-xl);">
+                <button onclick="downloadReport()" class="btn btn-primary" style="margin-right: var(--space-sm);">
+                    下载评估报告
                 </button>
-                <button class="action-button secondary" onclick="restartTest()">
-                    重新测试
+                <button onclick="restartTest()" class="btn btn-secondary">
+                    重新评估
                 </button>
             </div>
         </div>
     </div>
 
     <script>
+        // 创伤评估数据和配置
+        const traumaData = {
+            dimensions: [
+                { id: 'intimate', name: '亲密关系破裂', maxScore: 12 },
+                { id: 'family', name: '亲子关系冲突', maxScore: 12 },
+                { id: 'loss', name: '重要亲人离世', maxScore: 12 },
+                { id: 'friendship', name: '朋友反目成仇', maxScore: 12 },
+                { id: 'failure', name: '重大选择失败', maxScore: 12 },
+                { id: 'childhood', name: '童年阴影创伤', maxScore: 12 },
+                { id: 'humiliation', name: '公开受辱经历', maxScore: 12 }
+            ],
+            questions: [
+                // 亲密关系破裂
+                { dimension: 'intimate', text: '您是否经历过伴侣的出轨或背叛，让您对感情产生怀疑和不信任？' },
+                { dimension: 'intimate', text: '您是否因为分手或离婚而感到深深的痛苦和失落？' },
+                { dimension: 'intimate', text: '您是否被至亲至爱的人欺瞒过，感到被背叛和伤害？' },
+                { dimension: 'intimate', text: '您是否经历过被威胁或控制的亲密关系？' },
+                
+                // 亲子关系冲突
+                { dimension: 'family', text: '您是否经历过父母的抛弃或被拐骗等童年创伤事件？' },
+                { dimension: 'family', text: '您是否目睹或经历家庭暴力事件而感到恐惧和不安？' },
+                { dimension: 'family', text: '您是否因为遭受性侵或猥亵而留下心理阴影？' },
+                { dimension: 'family', text: '您是否因为身体残缺而无法正视自己？' },
+                
+                // 重要亲人离世
+                { dimension: 'loss', text: '您是否经历过至亲离世，长期无法走出悲伤？' },
+                { dimension: 'loss', text: '您是否因为错过重要的人或事而留下永久的遗憾？' },
+                { dimension: 'loss', text: '您是否因为宠物死亡而长期陷入哀伤？' },
+                { dimension: 'loss', text: '您是否因为重要关系突然断裂而感到空虚和迷茫？' },
+                
+                // 朋友反目成仇
+                { dimension: 'friendship', text: '您是否经历过与朋友反目成仇的痛苦？' },
+                { dimension: 'friendship', text: '您是否因为被朋友利用或窃取成果而感到愤怒？' },
+                { dimension: 'friendship', text: '您是否因为友谊破裂而对他人失去信任？' },
+                { dimension: 'friendship', text: '您是否因为社交失败而感到孤独和被排斥？' },
+                
+                // 重大选择失败
+                { dimension: 'failure', text: '您是否因为重大选择失误而改变人生轨迹？' },
+                { dimension: 'failure', text: '您是否因为被迫放弃学业或梦想而感到遗憾？' },
+                { dimension: 'failure', text: '您是否因为投资失败或被骗而承受经济压力？' },
+                { dimension: 'failure', text: '您是否因为重大过失（如车祸/监护过失）而长期自责？' },
+                
+                // 童年阴影创伤
+                { dimension: 'childhood', text: '您是否经历过当众被羞辱或嘲笑的事件？' },
+                { dimension: 'childhood', text: '您是否因为童年创伤而对权威人物产生恐惧？' },
+                { dimension: 'childhood', text: '您是否因为童年阴影而影响成年后的自我认知？' },
+                { dimension: 'childhood', text: '您是否因为早期创伤而对安全感缺失？' },
+                
+                // 公开受辱经历
+                { dimension: 'humiliation', text: '您是否经历过重要场合出丑的尴尬事件？' },
+                { dimension: 'humiliation', text: '您是否因为表白被嘲弄拒绝而对感情产生恐惧？' },
+                { dimension: 'humiliation', text: '您是否因为被PUA而对自己的价值产生怀疑？' },
+                { dimension: 'humiliation', text: '您是否因为公开受辱而长期逃避社交场合？' }
+            ],
+            options: [
+                { value: 0, text: '从未经历过' },
+                { value: 1, text: '偶尔想起时会有些不舒服' },
+                { value: 2, text: '经常想起并感到困扰' },
+                { value: 3, text: '严重影响日常生活' }
+            ],
+            recommendations: {
+                intimate: [
+                    '建议寻求专业心理咨询，建立健康的亲密关系模式',
+                    '可以尝试参加情感支持小组，与有相似经历的人交流',
+                    '学会建立边界，保护自己的情感安全'
+                ],
+                family: [
+                    '考虑家庭治疗，改善亲子关系',
+                    '寻求专业帮助处理童年创伤',
+                    '学习自我关爱，重建安全感'
+                ],
+                loss: [
+                    '允许自己悲伤，接受失去是人生的一部分',
+                    '考虑参加哀伤辅导或支持小组',
+                    '通过纪念活动或创作表达情感'
+                ],
+                friendship: [
+                    '学会识别真诚的友谊，避免有毒关系',
+                    '主动建立新的健康友谊关系',
+                    '提升社交技能，重建对人的信任'
+                ],
+                failure: [
+                    '接受失败是成长的一部分，不要过度自责',
+                    '分析失败原因，制定新的计划和目标',
+                    '寻求导师或教练的帮助和指导'
+                ],
+                childhood: [
+                    '寻求专业心理咨询处理童年创伤',
+                    '学习自我安抚技巧，重建安全感',
+                    '通过正念冥想等方式疗愈内心'
+                ],
+                humiliation: [
+                    '学习自信建立技巧，提升自我价值感',
+                    '练习社交技能，逐步重建社交信心',
+                    '寻求支持，避免孤立自己'
+                ]
+            }
+        };
+
         // 全局变量
         let currentQuestionIndex = 0;
         let answers = {};
         let testCompleted = false;
         let chartInstance = null;
 
-        // DOM 元素
+        // DOM元素
         const elements = {
             introPage: document.getElementById('intro-page'),
             testPage: document.getElementById('test-page'),
@@ -854,7 +684,6 @@
             currentQuestionSpan: document.getElementById('current-question'),
             totalQuestionsSpan: document.getElementById('total-questions'),
             questionTitle: document.getElementById('question-title'),
-            questionContent: document.getElementById('question-content'),
             questionOptions: document.getElementById('question-options'),
             dimensionTag: document.getElementById('dimension-tag'),
             prevBtn: document.getElementById('prev-btn'),
@@ -862,164 +691,31 @@
             overallScore: document.getElementById('overall-score'),
             scoreDescription: document.getElementById('score-description'),
             detailsGrid: document.getElementById('details-grid'),
-            recommendationsCard: document.getElementById('recommendations-card'),
-            priorityCard: document.getElementById('priority-card'),
+            priorityList: document.getElementById('priority-list'),
+            recommendationsContent: document.getElementById('recommendations-content'),
             errorMessage: document.getElementById('error-message')
         };
 
-        // 心结类型数据
-        const traumaData = {
-            dimensions: [
-                {
-                    id: 'relationship_break',
-                    name: '亲密关系破裂',
-                    description: '关于恋爱、婚姻关系中的背叛、分离等创伤',
-                    impact: {
-                        'low': '您对亲密关系保持较好的信任度和开放性，但偶尔会有一些担忧。',
-                        'medium': '亲密关系中的伤害影响了您的信任感和安全感，可能在建立新关系时存在顾虑。',
-                        'high': '亲密关系破裂给您造成了深层创伤，影响您对爱的认知和关系建立。',
-                        'severe': '亲密关系的破裂是您心中最深的伤痛，严重影响您的生活质量和心理健康。'
-                    },
-                    questions: [
-                        { id: 1, text: '您是否经历过伴侣的背叛或欺骗，让您对爱情失去信心？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '偶尔有类似情况'}, {value: 2, text: '经历过较严重情况'}, {value: 3, text: '造成严重心理影响'}] },
-                        { id: 2, text: '您是否因为分手或离婚而长期感到痛苦和不舍？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '需要一些时间适应'}, {value: 2, text: '很长时间才能恢复'}, {value: 3, text: '到现在还不能释怀'}] },
-                        { id: 3, text: '您是否因为伴侣出轨背叛而失去对爱情的信心？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '会小心一些'}, {value: 2, text: '很难再相信'}, {value: 3, text: '完全不敢相信'}] },
-                        { id: 4, text: '您是否因为被伴侣威胁或控制而感到恐惧和无助？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '有一点影响'}, {value: 2, text: '影响比较明显'}, {value: 3, text: '影响很严重'}] }
-                    ]
-                },
-                {
-                    id: 'family_conflict',
-                    name: '亲子关系冲突',
-                    description: '与父母、子女等直系亲属的关系问题',
-                    impact: {
-                        'low': '您与家庭成员关系相对和谐，能够正常沟通和相处。',
-                        'medium': '亲子关系中存在一些沟通障碍或情感隔阂，影响家庭和谐。',
-                        'high': '亲子关系冲突给您造成较大的情感困扰，影响家庭氛围和个人成长。',
-                        'severe': '亲子关系的恶化是您心中最深的痛，严重影响您的自我认知和情感健康。'
-                    },
-                    questions: [
-                        { id: 5, text: '您是否经历过父母的抛弃或被拐骗等童年创伤事件？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '偶尔会有小矛盾'}, {value: 2, text: '经常产生冲突'}, {value: 3, text: '关系变得疏远'}] },
-                        { id: 6, text: '您是否目睹或经历家庭暴力事件而感到恐惧和不安？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '有一些影响'}, {value: 2, text: '影响很明显'}, {value: 3, text: '留下深刻创伤'}] },
-                        { id: 7, text: '您是否因为遭受性侵或猥亵而留下心理阴影？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '偶尔会担心'}, {value: 2, text: '经常为此焦虑'}, {value: 3, text: '感到严重困扰'}] },
-                        { id: 8, text: '您是否因为被迫放弃学业或梦想而感到遗憾和痛苦？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '有轻微影响'}, {value: 2, text: '影响很明显'}, {value: 3, text: '严重缺失这种感觉'}] }
-                    ]
-                },
-                {
-                    id: 'loss_grief',
-                    name: '重要亲人离世',
-                    description: '失去至亲好友带来的哀伤和自责',
-                    impact: {
-                        'low': '您能够正常处理失去亲人的哀伤，虽然会想念但已接受现实。',
-                        'medium': '重要亲人的离世给您带来持续的悲伤，在某些时候会感到空虚和孤独。',
-                        'high': '失去至亲给您造成深层创伤，您的日常生活受到明显影响。',
-                        'severe': '亲人的离世是您心中最大的痛苦，这种损失感持续影响着您的生活。'
-                    },
-                    questions: [
-                        { id: 9, text: '您是否因为至亲离世而长期感到空虚和孤独？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '偶尔感到空虚'}, {value: 2, text: '经常感到孤独'}, {value: 3, text: '持续感到痛苦'}] },
-                        { id: 10, text: '您是否因为被至亲至爱欺瞒而感到被背叛和伤害？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '偶尔会有自责'}, {value: 2, text: '经常感到自责'}, {value: 3, text: '一直很愧疚'}] },
-                        { id: 11, text: '您是否因为宠物死亡而长期处于哀伤状态？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '有轻微影响'}, {value: 2, text: '影响很明显'}, {value: 3, text: '影响很严重'}] },
-                        { id: 12, text: '您是否因为因错过重要机会而感到深深遗憾？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '偶尔会想起'}, {value: 2, text: '经常想起'}, {value: 3, text: '还是难以接受'}] }
-                    ]
-                },
-                {
-                    id: 'friendship_betrayal',
-                    name: '朋友反目成仇',
-                    description: '友谊破裂、被朋友背叛的创伤体验',
-                    impact: {
-                        'low': '您能够理性看待友谊中的问题，对建立新友谊仍保持开放态度。',
-                        'medium': '友谊的破裂影响了您对朋友的信任，在交友时变得更加谨慎。',
-                        'high': '朋友的背叛给您造成较大伤害，您对友谊产生了深度怀疑。',
-                        'severe': '友谊的破裂是您心中的重要创伤，严重影响了您的社交能力和信任感。'
-                    },
-                    questions: [
-                        { id: 13, text: '您是否因为与朋友反目成仇而感到被深深背叛？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '受到一些伤害'}, {value: 2, text: '受到严重伤害'}, {value: 3, text: '留下深度伤害'}] },
-                        { id: 14, text: '您是否因为遭遇校园霸凌而对学校生活产生恐惧？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '会小心一些'}, {value: 2, text: '很难再相信'}, {value: 3, text: '完全不敢相信'}] },
-                        { id: 15, text: '您是否因为被孤立排斥而感到孤独和痛苦？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '有轻微影响'}, {value: 2, text: '影响很明显'}, {value: 3, text: '影响很严重'}] },
-                        { id: 16, text: '您是否因为被不公平对待而失去重要机会感到愤怒？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '有点担心'}, {value: 2, text: '比较担心'}, {value: 3, text: '非常害怕'}] }
-                    ]
-                },
-                {
-                    id: 'major_failure',
-                    name: '重大选择失败',
-                    description: '在重要决策上的失误带来的挫败感',
-                    impact: {
-                        'low': '您能够从重大选择的失败中学习，对未来的决策仍保持信心。',
-                        'medium': '重要选择的失败给您带来挫败感，在做决策时变得更加谨慎。',
-                        'high': '重大选择的失误给您造成较大打击，您对选择和决策失去信心。',
-                        'severe': '失败的选择是您心中的重担，严重影响了您的自信和决策能力。'
-                    },
-                    questions: [
-                        { id: 17, text: '您是否因为重大选择失误（如自伤/辍学/择业等）而后悔？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '偶尔会后悔'}, {value: 2, text: '经常后悔'}, {value: 3, text: '一直很自责'}] },
-                        { id: 18, text: '您是否因为重大考试失利而改变了人生轨迹？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '有轻微影响'}, {value: 2, text: '影响很明显'}, {value: 3, text: '感到严重困惑'}] },
-                        { id: 19, text: '您是否因为投资失败或被骗而遭受经济损失？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '偶尔错过机会'}, {value: 2, text: '错过了不少机会'}, {value: 3, text: '错过了重大机会'}] },
-                        { id: 20, text: '您是否因为被迫做违背良知的事情而感到内疚？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '有点犹豫'}, {value: 2, text: '比较犹豫'}, {value: 3, text: '极度恐惧'}] }
-                    ]
-                },
-                {
-                    id: 'childhood_trauma',
-                    name: '童年阴影创伤',
-                    description: '童年时期遭受的各种创伤和不良经历',
-                    impact: {
-                        'low': '您能够理性看待童年经历，这些经历没有对您的成长造成明显负面影响。',
-                        'medium': '童年的一些阴影事件影响了您的性格形成和人际关系建立。',
-                        'high': '童年创伤给您造成深刻影响，至今仍影响着您的情绪和行为模式。',
-                        'severe': '童年阴影是您心中最深的痛，这些创伤持续影响您的生活和心理健康。'
-                    },
-                    questions: [
-                        { id: 21, text: '您是否因为当众被羞辱或嘲笑而长期缺乏自信？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '偶尔缺乏安全感'}, {value: 2, text: '经常缺乏安全感'}, {value: 3, text: '严重缺乏安全感'}] },
-                        { id: 22, text: '您是否因为被冤枉无法自证而感到委屈和愤怒？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '有点困难'}, {value: 2, text: '困难很明显'}, {value: 3, text: '很难建立'}] },
-                        { id: 23, text: '您是否因为被他人利用或成果被窃取而感到愤怒？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '偶尔有恐惧感'}, {value: 2, text: '经常有恐惧感'}, {value: 3, text: '持续有恐惧感'}] },
-                        { id: 24, text: '您是否因为身体残缺而无法正视自己感到痛苦？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '有点偏差'}, {value: 2, text: '偏差很明显'}, {value: 3, text: '严重扭曲认知'}] }
-                    ]
-                },
-                {
-                    id: 'public_humiliation',
-                    name: '公开受辱经历',
-                    description: '在公众场合受到羞辱、霸凌的创伤体验',
-                    impact: {
-                        'low': '您能够从公开受辱的经历中恢复，对社交场合仍保持正常态度。',
-                        'medium': '公开的羞辱给您带来阴影，在社交场合变得更加谨慎和敏感。',
-                        'high': '受辱经历给您造成深刻创伤，严重影响了您的自尊心和社交能力。',
-                        'severe': '公开羞辱是您心中最深的伤害，严重影响了您的自信和生活质量。'
-                    },
-                    questions: [
-                        { id: 25, text: '您是否因为表白被嘲弄拒绝而对感情产生恐惧？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '偶尔会有影响'}, {value: 2, text: '经常有影响'}, {value: 3, text: '影响很严重'}] },
-                        { id: 26, text: '您是否因为在重要场合出丑而长期感到羞耻？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '有点紧张'}, {value: 2, text: '比较紧张'}, {value: 3, text: '极度恐惧'}] },
-                        { id: 27, text: '您是否因为被PUA而对自己的价值产生怀疑？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '偶尔会避免'}, {value: 2, text: '经常避免'}, {value: 3, text: '完全避免'}] },
-                        { id: 28, text: '您是否因为重大过失（如车祸/连累他人）而持续自责？', options: [{value: 0, text: '从未经历过'}, {value: 1, text: '有轻微影响'}, {value: 2, text: '影响很明显'}, {value: 3, text: '影响很严重'}] }
-                    ]
-                }
-            ]
-        };
-
-        // 错误处理函数
+        // 工具函数
         function showError(message) {
-            console.error('Error:', message);
             elements.errorMessage.textContent = message;
-            elements.errorMessage.style.display = 'block';
+            elements.errorMessage.classList.add('show');
             setTimeout(() => {
-                elements.errorMessage.style.display = 'none';
+                elements.errorMessage.classList.remove('show');
             }, 5000);
         }
 
-        // 获取所有问题
-        function getAllQuestions() {
-            const allQuestions = [];
-            traumaData.dimensions.forEach(dimension => {
-                dimension.questions.forEach(question => {
-                    allQuestions.push({
-                        ...question,
-                        dimension: dimension.id,
-                        dimensionName: dimension.name,
-                        dimensionDescription: dimension.description,
-                        impact: dimension.impact
-                    });
-                });
+        function showPage(pageId) {
+            document.querySelectorAll('.page-container').forEach(page => {
+                page.classList.remove('active');
             });
-            return allQuestions;
+            document.getElementById(pageId + '-page').classList.add('active');
         }
 
-        // 初始化测试
+        function getAllQuestions() {
+            return traumaData.questions;
+        }
+
         function initTest() {
             try {
                 const allQuestions = getAllQuestions();
@@ -1037,104 +733,92 @@
         function startTest() {
             try {
                 console.log('Starting test...');
-                initTest();
                 showPage('test');
-                displayCurrentQuestion();
-                updateProgress();
+                loadQuestion();
             } catch (error) {
                 showError('开始测试时出错：' + error.message);
             }
         }
 
-        // 显示页面
-        function showPage(pageName) {
+        // 加载题目
+        function loadQuestion() {
             try {
-                elements.introPage.classList.remove('active');
-                elements.testPage.classList.remove('active');
-                elements.resultPage.classList.remove('active');
-                
-                if (pageName === 'intro') {
-                    elements.introPage.classList.add('active');
-                } else if (pageName === 'test') {
-                    elements.testPage.classList.add('active');
-                } else if (pageName === 'result') {
-                    elements.resultPage.classList.add('active');
+                const allQuestions = getAllQuestions();
+                if (currentQuestionIndex >= allQuestions.length) {
+                    completeTest();
+                    return;
                 }
-                console.log('Showing page:', pageName);
+
+                const question = allQuestions[currentQuestionIndex];
+                const dimension = traumaData.dimensions.find(d => d.id === question.dimension);
+                
+                // 更新题目内容
+                elements.questionTitle.textContent = question.text;
+                elements.dimensionTag.textContent = dimension.name;
+                elements.currentQuestionSpan.textContent = currentQuestionIndex + 1;
+                
+                // 更新进度条
+                const progress = ((currentQuestionIndex) / allQuestions.length) * 100;
+                elements.progressFill.style.width = progress + '%';
+                
+                // 生成选项
+                generateOptions(question);
+                
+                // 更新按钮状态
+                updateNavigationButtons();
+                
+                console.log('Question loaded:', currentQuestionIndex + 1, '/', allQuestions.length);
             } catch (error) {
-                showError('切换页面时出错：' + error.message);
+                showError('加载题目时出错：' + error.message);
             }
         }
 
-        // 显示当前题目
-        function displayCurrentQuestion() {
+        // 生成选项
+        function generateOptions(question) {
             try {
-                const allQuestions = getAllQuestions();
-                const question = allQuestions[currentQuestionIndex];
-                
-                if (!question) {
-                    console.error('No question found for index:', currentQuestionIndex);
-                    return;
-                }
-                
-                console.log('Displaying question:', question.id, question.text);
-                
-                // 更新题目内容
-                elements.questionTitle.textContent = `题目 ${currentQuestionIndex + 1}`;
-                elements.questionContent.textContent = question.text;
-                elements.dimensionTag.textContent = question.dimensionName;
-                
-                // 清空并创建选项
                 elements.questionOptions.innerHTML = '';
                 
-                question.options.forEach((option, index) => {
+                traumaData.options.forEach((option, index) => {
+                    const optionId = `q${currentQuestionIndex}_opt${index}`;
                     const optionDiv = document.createElement('div');
                     optionDiv.className = 'option-item';
                     
-                    if (answers[question.id] === option.value) {
+                    const isChecked = answers[currentQuestionIndex] === option.value;
+                    if (isChecked) {
                         optionDiv.classList.add('selected');
                     }
                     
                     optionDiv.innerHTML = `
-                        <input type="radio" name="question_${question.id}" value="${option.value}" 
-                               ${answers[question.id] === option.value ? 'checked' : ''}>
-                        <label class="option-label">
-                            <span class="option-radio"></span>
-                            ${option.text}
-                        </label>
+                        <input type="radio" 
+                               id="${optionId}" 
+                               name="question_${currentQuestionIndex}" 
+                               value="${option.value}"
+                               ${isChecked ? 'checked' : ''}
+                               onchange="selectOption(${option.value})">
+                        <label for="${optionId}">${option.text}</label>
                     `;
-                    
-                    optionDiv.addEventListener('click', () => {
-                        selectOption(question.id, option.value);
-                    });
                     
                     elements.questionOptions.appendChild(optionDiv);
                 });
-                
-                updateNavigationButtons();
             } catch (error) {
-                showError('显示题目时出错：' + error.message);
+                showError('生成选项时出错：' + error.message);
             }
         }
 
         // 选择选项
-        function selectOption(questionId, value) {
+        function selectOption(value) {
             try {
-                console.log('Selecting option:', questionId, value);
-                answers[questionId] = value;
+                answers[currentQuestionIndex] = parseInt(value);
+                console.log('Answer selected:', currentQuestionIndex, value);
                 
-                // 更新UI
-                const optionDivs = elements.questionOptions.querySelectorAll('.option-item');
-                optionDivs.forEach(div => div.classList.remove('selected'));
-                
-                const selectedDiv = Array.from(optionDivs).find(div => {
-                    const input = div.querySelector('input[type="radio"]');
-                    return input && parseInt(input.value) === value;
+                // 更新选项样式
+                document.querySelectorAll('.option-item').forEach((item, index) => {
+                    item.classList.remove('selected');
+                    const radio = item.querySelector('input[type="radio"]');
+                    if (radio && parseInt(radio.value) === value) {
+                        item.classList.add('selected');
+                    }
                 });
-                
-                if (selectedDiv) {
-                    selectedDiv.classList.add('selected');
-                }
                 
                 updateNavigationButtons();
             } catch (error) {
@@ -1144,30 +828,30 @@
 
         // 更新导航按钮
         function updateNavigationButtons() {
-            const allQuestions = getAllQuestions();
-            
-            // 更新前一题按钮
+            const hasAnswer = answers[currentQuestionIndex] !== undefined;
+            elements.nextBtn.disabled = !hasAnswer;
             elements.prevBtn.disabled = currentQuestionIndex === 0;
             
-            // 更新下一题按钮
-            const currentQuestion = allQuestions[currentQuestionIndex];
-            const hasAnswer = currentQuestion && answers[currentQuestion.id] !== undefined;
-            
-            if (currentQuestionIndex === allQuestions.length - 1) {
-                elements.nextBtn.textContent = '查看结果';
-                elements.nextBtn.disabled = !hasAnswer;
+            if (currentQuestionIndex === getAllQuestions().length - 1 && hasAnswer) {
+                elements.nextBtn.textContent = '完成评估';
             } else {
                 elements.nextBtn.textContent = '下一题';
-                elements.nextBtn.disabled = !hasAnswer;
             }
         }
 
-        // 更新进度
-        function updateProgress() {
-            const allQuestions = getAllQuestions();
-            const progress = ((currentQuestionIndex) / allQuestions.length) * 100;
-            elements.progressFill.style.width = progress + '%';
-            elements.currentQuestionSpan.textContent = currentQuestionIndex + 1;
+        // 下一题
+        function nextQuestion() {
+            try {
+                if (answers[currentQuestionIndex] === undefined) {
+                    showError('请选择一个答案后再继续');
+                    return;
+                }
+                
+                currentQuestionIndex++;
+                loadQuestion();
+            } catch (error) {
+                showError('下一题时出错：' + error.message);
+            }
         }
 
         // 上一题
@@ -1175,332 +859,264 @@
             try {
                 if (currentQuestionIndex > 0) {
                     currentQuestionIndex--;
-                    displayCurrentQuestion();
-                    updateProgress();
+                    loadQuestion();
                 }
             } catch (error) {
                 showError('上一题时出错：' + error.message);
             }
         }
 
-        // 下一题
-        function nextQuestion() {
+        // 完成测试
+        function completeTest() {
+            try {
+                testCompleted = true;
+                console.log('Test completed, calculating results...');
+                calculateResults();
+                showPage('result');
+            } catch (error) {
+                showError('完成测试时出错：' + error.message);
+            }
+        }
+
+        // 计算结果
+        function calculateResults() {
             try {
                 const allQuestions = getAllQuestions();
+                const dimensionScores = {};
                 
-                if (currentQuestionIndex === allQuestions.length - 1) {
-                    // 显示结果
-                    showResults();
-                } else {
-                    currentQuestionIndex++;
-                    displayCurrentQuestion();
-                    updateProgress();
-                }
+                // 初始化维度得分
+                traumaData.dimensions.forEach(dimension => {
+                    dimensionScores[dimension.id] = 0;
+                });
+                
+                // 计算每个维度的得分
+                allQuestions.forEach((question, index) => {
+                    const answer = answers[index] || 0;
+                    dimensionScores[question.dimension] += answer;
+                });
+                
+                // 计算总分
+                let totalScore = 0;
+                Object.values(dimensionScores).forEach(score => {
+                    totalScore += score;
+                });
+                
+                // 生成结果
+                displayResults(totalScore, dimensionScores);
             } catch (error) {
-                showError('下一题时出错：' + error.message);
+                showError('计算结果时出错：' + error.message);
             }
         }
 
         // 显示结果
-        function showResults() {
+        function displayResults(totalScore, dimensionScores) {
             try {
-                console.log('Showing results...');
-                testCompleted = true;
-                showPage('result');
-                generateResults();
+                // 显示总分
+                elements.overallScore.textContent = totalScore;
+                elements.scoreDescription.textContent = getScoreDescription(totalScore);
+                
+                // 显示各维度得分
+                displayDimensionScores(dimensionScores);
+                
+                // 显示重点关注领域
+                displayPriorityAreas(dimensionScores);
+                
+                // 显示建议
+                displayRecommendations(dimensionScores);
+                
+                // 创建雷达图
+                createRadarChart(dimensionScores);
             } catch (error) {
                 showError('显示结果时出错：' + error.message);
             }
         }
 
-        // 生成结果
-        function generateResults() {
-            try {
-                // 计算各维度得分
-                const dimensionScores = {};
-                traumaData.dimensions.forEach(dimension => {
-                    const dimensionAnswers = dimension.questions.map(q => answers[q.id] || 0);
-                    const avgScore = dimensionAnswers.reduce((sum, score) => sum + score, 0) / dimensionAnswers.length;
-                    dimensionScores[dimension.id] = avgScore;
-                });
-                
-                // 计算总体得分
-                const overallScore = Math.round(
-                    Object.values(dimensionScores).reduce((sum, score) => sum + score, 0) / traumaData.dimensions.length * 20
-                );
-                
-                // 更新总体评估
-                elements.overallScore.textContent = overallScore;
-                elements.scoreDescription.textContent = getOverallDescription(overallScore);
-                
-                // 生成雷达图
-                generateRadarChart(dimensionScores);
-                
-                // 生成重点心结分析
-                generatePriorityAnalysis(dimensionScores);
-                
-                // 生成详细分析
-                generateDetails(dimensionScores);
-                
-                // 生成建议
-                generateRecommendations(dimensionScores);
-                
-                console.log('Results generated successfully');
-            } catch (error) {
-                showError('生成结果时出错：' + error.message);
+        // 获取分数描述
+        function getScoreDescription(score) {
+            if (score <= 20) {
+                return '您的心结困扰程度较低，这表明您在处理情感创伤方面表现良好。请继续保持积极的心态。';
+            } else if (score <= 40) {
+                return '您存在一定的心结困扰，建议关注自己的情感需求，适时寻求支持和帮助。';
+            } else if (score <= 60) {
+                return '您的心结困扰较为明显，建议认真对待，寻求专业心理咨询师的帮助。';
+            } else if (score <= 80) {
+                return '您的心结困扰严重，建议尽快寻求专业心理治疗，这可能会对您的日常生活产生较大影响。';
+            } else {
+                return '您的心结困扰非常严重，强烈建议立即寻求专业心理治疗，不要独自承受。';
             }
         }
 
-        // 总体描述
-        function getOverallDescription(score) {
-            if (score < 25) return '您的心结困扰指数较低，说明您在大多数方面都能够保持内心的平静。但仍有一些可以优化的地方。';
-            if (score < 50) return '您的心结困扰指数中等，有一些心结需要您的关注和化解。建议您寻找合适的方式来处理这些困扰。';
-            if (score < 75) return '您的心结困扰指数较高，有几个方面的心结对您产生了明显影响。建议您寻求专业帮助来解开这些心结。';
-            return '您的心结困扰指数很高，这些心结严重影响您的生活质量和心理健康。强烈建议您寻求专业的心理支持和指导。';
+        // 显示维度得分
+        function displayDimensionScores(dimensionScores) {
+            elements.detailsGrid.innerHTML = '';
+            
+            traumaData.dimensions.forEach(dimension => {
+                const score = dimensionScores[dimension.id];
+                const percentage = Math.round((score / dimension.maxScore) * 100);
+                
+                const item = document.createElement('div');
+                item.className = 'dimension-item';
+                item.innerHTML = `
+                    <span>${dimension.name}</span>
+                    <span class="dimension-score">${score}/${dimension.maxScore} (${percentage}%)</span>
+                `;
+                elements.detailsGrid.appendChild(item);
+            });
         }
 
-        // 获取风险等级
-        function getRiskLevel(score) {
-            if (score < 25) return { level: 'low', label: '轻度困扰', color: '#28A745' };
-            if (score < 50) return { level: 'medium', label: '中度困扰', color: '#FFC107' };
-            if (score < 75) return { level: 'high', label: '高度困扰', color: '#DC3545' };
-            return { level: 'severe', label: '重度困扰', color: '#8B0000' };
+        // 显示重点关注领域
+        function displayPriorityAreas(dimensionScores) {
+            elements.priorityList.innerHTML = '';
+            
+            // 按得分排序
+            const sortedDimensions = traumaData.dimensions
+                .map(dimension => ({
+                    ...dimension,
+                    score: dimensionScores[dimension.id]
+                }))
+                .sort((a, b) => b.score - a.score)
+                .slice(0, 3); // 取前3个得分最高的维度
+            
+            sortedDimensions.forEach(dimension => {
+                const li = document.createElement('li');
+                li.className = 'priority-item';
+                li.innerHTML = `
+                    <strong>${dimension.name}</strong> (得分: ${dimension.score}/${dimension.maxScore})
+                    <br>建议重点关注这个领域的治愈工作
+                `;
+                elements.priorityList.appendChild(li);
+            });
         }
 
-        // 生成雷达图
-        function generateRadarChart(dimensionScores) {
-            try {
-                const canvas = document.getElementById('trauma-radar-chart');
-                if (!canvas) {
-                    console.error('Chart canvas not found');
-                    return;
-                }
-                
-                // 销毁现有图表实例
-                if (chartInstance) {
-                    chartInstance.destroy();
-                }
-                
-                const ctx = canvas.getContext('2d');
-                const labels = traumaData.dimensions.map(d => d.name);
-                const data = traumaData.dimensions.map(d => Math.round((dimensionScores[d.id] || 0) / 12 * 100));
-                
-                chartInstance = new Chart(ctx, {
-                    type: 'radar',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: '心结困扰指数 (%)',
-                            data: data,
-                            backgroundColor: 'rgba(45, 106, 106, 0.1)',
-                            borderColor: '#2D6A6A',
-                            borderWidth: 2,
-                            pointBackgroundColor: '#2D6A6A',
-                            pointBorderColor: '#fff',
-                            pointHoverBackgroundColor: '#fff',
-                            pointHoverBorderColor: '#2D6A6A'
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            r: {
-                                beginAtZero: true,
-                                max: 100,
-                                ticks: { stepSize: 20 }
-                            }
-                        },
-                        plugins: {
-                            legend: { display: true }
-                        }
-                    }
-                });
-                
-                console.log('Radar chart generated successfully');
-            } catch (error) {
-                console.error('Error generating radar chart:', error);
-                showError('生成图表时出错：' + error.message);
-            }
-        }
-
-        // 生成重点心结分析
-        function generatePriorityAnalysis(dimensionScores) {
-            try {
-                // 找出得分最高的前3个维度
-                const sortedDimensions = Object.entries(dimensionScores)
-                    .map(([id, score]) => ({ id, score, dimension: traumaData.dimensions.find(d => d.id === id) }))
-                    .sort((a, b) => b.score - a.score)
-                    .slice(0, 3);
-
-                let priorityHTML = '';
-                
-                if (sortedDimensions.length === 0) {
-                    priorityHTML = '<p style="text-align: center; color: #6B7280;">您的心结困扰指数较低，建议保持良好的心理健康状态。</p>';
-                } else {
-                    sortedDimensions.forEach(item => {
-                        const score = Math.round((item.score || 0) / 3 * 100);
-                        const riskLevel = getRiskLevel(score);
-                        const dimension = item.dimension;
-                        
-                        // 获取对应的描述
-                        let impactDesc = '';
-                        if (score < 25) {
-                            impactDesc = dimension.impact.low;
-                        } else if (score < 50) {
-                            impactDesc = dimension.impact.medium;
-                        } else if (score < 75) {
-                            impactDesc = dimension.impact.high;
-                        } else {
-                            impactDesc = dimension.impact.severe;
-                        }
-                        
-                        priorityHTML += `
-                            <div class="priority-item">
-                                <div class="priority-title">${dimension.name}</div>
-                                <div class="priority-score">${riskLevel.label} - ${score}%</div>
-                                <div class="priority-impact">${impactDesc}</div>
-                            </div>
+        // 显示建议
+        function displayRecommendations(dimensionScores) {
+            elements.recommendationsContent.innerHTML = '';
+            
+            traumaData.dimensions.forEach(dimension => {
+                const score = dimensionScores[dimension.id];
+                if (score > 0) { // 只显示有得分的维度的建议
+                    const recs = traumaData.recommendations[dimension.id] || [];
+                    if (recs.length > 0) {
+                        const recSection = document.createElement('div');
+                        recSection.style.marginBottom = 'var(--space-lg)';
+                        recSection.innerHTML = `
+                            <h4 style="color: var(--primary-color); margin-bottom: var(--space-sm);">
+                                ${dimension.name}相关建议：
+                            </h4>
                         `;
-                    });
+                        
+                        recs.forEach(rec => {
+                            const recItem = document.createElement('div');
+                            recItem.className = 'recommendation-item';
+                            recItem.textContent = rec;
+                            recSection.appendChild(recItem);
+                        });
+                        
+                        elements.recommendationsContent.appendChild(recSection);
+                    }
                 }
-                
-                elements.priorityCard.innerHTML = priorityHTML;
-                console.log('Priority analysis generated successfully');
-            } catch (error) {
-                console.error('Error generating priority analysis:', error);
-                showError('生成重点分析时出错：' + error.message);
-            }
+            });
         }
 
-        // 生成详细分析
-        function generateDetails(dimensionScores) {
+        // 创建雷达图
+        function createRadarChart(dimensionScores) {
             try {
-                elements.detailsGrid.innerHTML = '';
+                const canvas = document.getElementById('chart-canvas');
+                canvas.innerHTML = '';
+                
+                // 创建雷达图的替代显示 - 使用纯CSS和HTML实现
+                const chartDiv = document.createElement('div');
+                chartDiv.style.cssText = 'width: 100%; max-width: 400px; margin: 0 auto;';
+                
+                let chartHTML = '<h4 style="margin-bottom: 24px; color: var(--primary-color); text-align: center;">各维度创伤程度分析</h4>';
                 
                 traumaData.dimensions.forEach(dimension => {
-                    const score = Math.round((dimensionScores[dimension.id] || 0) / 3 * 100);
-                    const riskLevel = getRiskLevel(score);
+                    const score = dimensionScores[dimension.id];
+                    const percentage = Math.round((score / dimension.maxScore) * 100);
+                    const barHeight = Math.max(percentage * 2, 8); // 最小8px高度
                     
-                    const detailCard = document.createElement('div');
-                    detailCard.className = 'detail-card';
-                    
-                    // 获取对应的描述
-                    let description = '';
-                    if (score < 25) {
-                        description = dimension.impact.low;
-                    } else if (score < 50) {
-                        description = dimension.impact.medium;
-                    } else if (score < 75) {
-                        description = dimension.impact.high;
-                    } else {
-                        description = dimension.impact.severe;
-                    }
-                    
-                    detailCard.innerHTML = `
-                        <h4>${dimension.name}</h4>
-                        <div class="score-indicator">
-                            <span class="score-badge ${riskLevel.level}">${riskLevel.label}</span>
-                            <span>${score}%</span>
+                    chartHTML += `
+                        <div style="margin-bottom: 16px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <span style="font-size: 0.9rem; color: var(--text-secondary);">${dimension.name}</span>
+                                <span style="font-size: 0.9rem; color: var(--primary-color); font-weight: 600;">${percentage}%</span>
+                            </div>
+                            <div style="width: 100%; height: 12px; background: var(--border-color); border-radius: 6px; overflow: hidden;">
+                                <div style="width: ${percentage}%; height: 100%; background: linear-gradient(90deg, var(--primary-color), var(--primary-hover)); border-radius: 6px; transition: width 0.5s ease;"></div>
+                            </div>
                         </div>
-                        <p>${description}</p>
                     `;
-                    
-                    elements.detailsGrid.appendChild(detailCard);
                 });
                 
-                console.log('Details generated successfully');
+                chartHTML += '<p style="margin-top: 20px; font-size: 0.85rem; color: var(--text-secondary); text-align: center; padding: 12px; background: var(--primary-light); border-radius: 8px;">百分比越高表示该维度创伤影响越明显</p>';
+                
+                chartDiv.innerHTML = chartHTML;
+                canvas.appendChild(chartDiv);
+                
+                console.log('Alternative radar chart created successfully');
             } catch (error) {
-                console.error('Error generating details:', error);
-                showError('生成详细分析时出错：' + error.message);
-            }
-        }
-
-        // 生成建议
-        function generateRecommendations(dimensionScores) {
-            try {
-                const highRiskDimensions = Object.entries(dimensionScores)
-                    .filter(([id, score]) => (score / 3 * 100) >= 50)
-                    .map(([id]) => id);
-                
-                let recommendations = '';
-                
-                if (highRiskDimensions.length === 0) {
-                    recommendations = `
-                        <div class="recommendation-item">
-                            <h4>保持心理健康</h4>
-                            <p>继续维护良好的生活习惯，培养积极的心态，保持社交联系。定期进行自我反思，保持内心的平静。</p>
-                        </div>
-                    `;
-                } else if (highRiskDimensions.length <= 2) {
-                    recommendations = `
-                        <div class="recommendation-item">
-                            <h4>关注重点心结</h4>
-                            <p>根据评估结果，您需要重点关注 ${highRiskDimensions.length} 个方面的心结。建议您先从最困扰的一个开始，寻求专业心理支持。</p>
-                        </div>
-                        <div class="recommendation-item">
-                            <h4>循序渐进</h4>
-                            <p>解开心结是一个渐进的过程，不要急于求成。可以从简单的自我调节开始，如写日记、冥想等。</p>
-                        </div>
-                    `;
-                } else {
-                    recommendations = `
-                        <div class="recommendation-item">
-                            <h4>寻求专业支持</h4>
-                            <p>您的评估显示多个方面都存在较高的心结困扰，强烈建议您寻求专业的心理倾听与成长服务。专业的倾听师可以帮助您更好地理解和处理这些困扰。</p>
-                        </div>
-                        <div class="recommendation-item">
-                            <h4>建立支持系统</h4>
-                            <p>寻找可以信任的朋友或家人分享您的感受，加入解开心结支持小组，与有相似经历的人互相支持。</p>
-                        </div>
-                        <div class="recommendation-item">
-                            <h4>自我关爱</h4>
-                            <p>在寻求专业帮助的同时，也要学会自我关爱。保持规律的作息，进行适量的运动，练习正念冥想等。</p>
-                        </div>
-                    `;
-                }
-                
-                elements.recommendationsCard.innerHTML = recommendations;
-                console.log('Recommendations generated successfully');
-            } catch (error) {
-                console.error('Error generating recommendations:', error);
-                showError('生成建议时出错：' + error.message);
+                console.error('Error creating chart:', error);
+                showError('创建图表时出错：' + error.message);
             }
         }
 
         // 下载报告
         function downloadReport() {
             try {
-                // 计算各维度得分用于报告
-                const dimensionScores = {};
-                traumaData.dimensions.forEach(dimension => {
-                    const dimensionAnswers = dimension.questions.map(q => answers[q.id] || 0);
-                    const avgScore = dimensionAnswers.reduce((sum, score) => sum + score, 0) / dimensionAnswers.length;
-                    dimensionScores[dimension.id] = Math.round((avgScore / 3) * 100);
-                });
-
                 const reportData = {
                     timestamp: new Date().toISOString(),
+                    overallScore: parseInt(elements.overallScore.textContent),
+                    scoreDescription: elements.scoreDescription.textContent,
                     answers: answers,
-                    dimensionScores: dimensionScores,
-                    completed: testCompleted,
-                    reportTitle: '心结解开评估报告'
+                    dimensionScores: getDimensionScores(),
+                    recommendations: getRecommendations()
                 };
                 
-                const dataBlob = new Blob([JSON.stringify(reportData, null, 2)], { type: 'application/json' });
-                const url = URL.createObjectURL(dataBlob);
+                const dataStr = JSON.stringify(reportData, null, 2);
+                const dataBlob = new Blob([dataStr], {type: 'application/json'});
+                
                 const link = document.createElement('a');
-                link.href = url;
-                link.download = `心结解开评估报告_${new Date().toISOString().slice(0, 10)}.json`;
-                document.body.appendChild(link);
+                link.href = URL.createObjectURL(dataBlob);
+                link.download = `心结评估报告_${new Date().toLocaleDateString('zh-CN').replace(/\//g, '-')}.json`;
                 link.click();
-                document.body.removeChild(link);
-                URL.revokeObjectURL(url);
                 
                 alert('报告已下载为JSON文件。如需更详细的分析和建议，建议咨询专业心理倾听与成长服务。');
             } catch (error) {
                 showError('下载报告时出错：' + error.message);
             }
+        }
+
+        function getDimensionScores() {
+            const dimensionScores = {};
+            traumaData.dimensions.forEach(dimension => {
+                dimensionScores[dimension.id] = 0;
+            });
+            
+            const allQuestions = getAllQuestions();
+            allQuestions.forEach((question, index) => {
+                const answer = answers[index] || 0;
+                dimensionScores[question.dimension] += answer;
+            });
+            
+            return dimensionScores;
+        }
+
+        function getRecommendations() {
+            const recommendations = [];
+            const dimensionScores = getDimensionScores();
+            
+            traumaData.dimensions.forEach(dimension => {
+                const score = dimensionScores[dimension.id];
+                if (score > 0) {
+                    recommendations.push({
+                        dimension: dimension.name,
+                        score: score,
+                        suggestions: traumaData.recommendations[dimension.id] || []
+                    });
+                }
+            });
+            
+            return recommendations;
         }
 
         // 重新开始测试
@@ -1535,13 +1151,6 @@
                 console.log('Application initialized successfully');
             } catch (error) {
                 showError('初始化应用时出错：' + error.message);
-            }
-        });
-
-        // Chart.js加载检查
-        window.addEventListener('load', function() {
-            if (typeof Chart === 'undefined') {
-                showError('图表库加载失败，雷达图功能可能不可用');
             }
         });
     </script>
