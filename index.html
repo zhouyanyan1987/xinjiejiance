@@ -75,6 +75,50 @@
             margin: 0 auto;
         }
 
+        .hero-title {
+            font-size: 2.8rem;
+            font-weight: 600;
+            margin-bottom: var(--space-lg);
+            color: var(--text-primary);
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-xl);
+            line-height: 1.8;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .disclaimer {
+            background-color: #FFFBEB;
+            border: 1px solid #FED7AA;
+            border-radius: var(--border-radius);
+            padding: var(--space-md);
+            margin-bottom: var(--space-lg);
+            text-align: center;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+
+        .test-info {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-lg);
+            margin-bottom: var(--space-xl);
+            flex-wrap: wrap;
+        }
+
+        .info-item {
+            background: var(--primary-light);
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
         .page-container {
             display: none;
             background: var(--bg-surface);
@@ -424,6 +468,19 @@
             .header h1 {
                 font-size: 2rem;
             }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .test-info {
+                flex-direction: column;
+                gap: var(--space-md);
+            }
             
             .page-container {
                 padding: var(--space-lg);
@@ -468,29 +525,27 @@
         <!-- 介绍页面 -->
         <div id="intro-page" class="page-container active">
             <div class="intro-content">
-                <h2 style="margin-bottom: var(--space-lg); color: var(--primary-color);">欢迎使用心结解开评估系统</h2>
-                <p style="margin-bottom: var(--space-xl); font-size: 1.1rem; line-height: 1.8;">
-                    这是一个专业的心理创伤评估工具，通过28道精心设计的题目，从7个维度全面评估您可能存在的心理创伤。
-                    评估结果将为您提供个性化的建议和治愈方向。
+                <h1 class="hero-title">心结解开评估系统</h1>
+                <p class="hero-subtitle">
+                    每个人心中都可能有一些解不开的心结，它们影响着我们的情绪、决策和生活质量。
+                    通过这个评估系统，识别您需要重点解开的心结，找回内心的平静。
                 </p>
                 
-                <div class="intro-features">
-                    <div class="feature-card">
-                        <h3>科学评估</h3>
-                        <p>基于专业心理学理论，结合实际创伤事件进行评估</p>
+                <div class="disclaimer">
+                    <span>💡 本评估仅为自我探索工具，帮助您更好地了解自己的内心世界。如需要，请寻求专业心理健康服务。</span>
+                </div>
+
+                <div class="test-info">
+                    <div class="info-item">
+                        <span>⏱️ 预计用时：15-20分钟</span>
                     </div>
-                    <div class="feature-card">
-                        <h3>全面分析</h3>
-                        <p>涵盖亲密关系、家庭、校园、职场等多个生活领域</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>个性化建议</h3>
-                        <p>根据您的具体情况，提供针对性的治愈建议</p>
+                    <div class="info-item">
+                        <span>🔒 完全匿名保密</span>
                     </div>
                 </div>
                 
                 <button onclick="startTest()" class="btn btn-primary" style="font-size: 1.1rem; padding: var(--space-md) var(--space-xl);">
-                    开始评估
+                    开始探索
                 </button>
             </div>
         </div>
